@@ -22,7 +22,6 @@ export class UsersController {
         const { data } = await this.httpService.get('https://randomuser.me/api/').toPromise();
 
         return this.usersService.generate(data.results[0])
-            .then(res => res)
             .catch(() => {
                 throw new HttpException("does't work service of generate", 500)
             })
@@ -31,7 +30,6 @@ export class UsersController {
     @Get()
     async findAll(): Promise<User[]> {
         return this.usersService.findAll()
-            .then(res => res)
             .catch(() => {
                 throw new HttpException("have not found users", 500)
             })
@@ -40,9 +38,8 @@ export class UsersController {
     @Get(':id')
     async findOne(@Param('id') id): Promise<User> {
         return this.usersService.findOne(id)
-            .then(res => res)
             .catch((error) => {
-                throw new HttpException(error, 404)
+                throw new HttpException(error, 400)
             })
     }
 
@@ -63,9 +60,8 @@ export class UsersController {
         if (!gender || typeof gender !== 'string') throw new HttpException("have not gender or type is't string", 400)
 
         return this.usersService.create(createUserDto)
-            .then(res => res)
             .catch(error => {
-                throw new HttpException(error, 404)
+                throw new HttpException(error, 400)
             })
     }
 
@@ -90,9 +86,8 @@ export class UsersController {
         if (!password || typeof password !== 'string') throw new HttpException("have not password or type is't string", 400)
 
         return this.usersService.login(userDto)
-            .then(res => res)
             .catch(error => {
-                throw new HttpException(error, 404)
+                throw new HttpException(error, 400)
             })
     }
 }

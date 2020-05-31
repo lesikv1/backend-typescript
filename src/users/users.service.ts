@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt'
 import { Injectable } from '@nestjs/common';
-import { User } from './interfaces/user.interface'
+import { User, GenerateUser} from './interfaces/user.interface'
 import { InjectModel } from '@nestjs/mongoose'
 
 @Injectable()
@@ -52,15 +52,12 @@ export class UsersService {
         return user
     }
 
-    async generate(data: User) {
+    generate(data: GenerateUser) {
         const user = {
-            // @ts-ignore
             name: data.name.title + ' ' + data.name.first + ' ' + data.name.last,
             email: data.email,
             gender: data.gender,
-            // @ts-ignore
             picture: data.picture.large,
-            // @ts-ignore
             password: data.login.password,
             removed: false
         }
